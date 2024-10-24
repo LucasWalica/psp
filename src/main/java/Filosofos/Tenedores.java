@@ -16,7 +16,7 @@ public class Tenedores {
         this.estaCogido=true;
     }
 
-    public void dejarTenedor(){
+    public synchronized void dejarTenedor(){
         this.estaCogido=false;
         notify();
     }

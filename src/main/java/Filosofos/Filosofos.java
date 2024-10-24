@@ -46,6 +46,14 @@ public class Filosofos extends Thread{
         this.sentado = true;
         tenedorIzquierda.cogerTenedor();
         tenedorDerecha.cogerTenedor();
+        tenedoresCogidos();
+        if(!this.tieneTenedores){
+            tenedorDerecha.dejarTenedor();
+            tenedorIzquierda.dejarTenedor();
+            sillas.liberarSilla();
+            this.sentado=false;
+            System.out.println("No ha comido y se ha levantado para pensar");
+        }
         System.out.println("El filósofo " + id + " está comiendo.");
         Thread.sleep((int) (Math.random() * 1000));
         tenedorDerecha.dejarTenedor();
