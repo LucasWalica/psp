@@ -27,10 +27,10 @@ public class Filosofos extends Thread{
     public void run() {
         try {
             while (true) {
-
                     pensar();
+                    sleep(500);
                     comer();
-
+                    sleep(500);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
