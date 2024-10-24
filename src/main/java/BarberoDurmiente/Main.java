@@ -12,5 +12,4 @@ public class Main {
         Barbero b = new Barbero(clientes, sillas);
         b.start();
     }
-
 }

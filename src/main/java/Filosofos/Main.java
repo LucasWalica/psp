@@ -1,6 +1,12 @@
 package Filosofos;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Main {
+
     public static void main(String[] args) {
         Tenedores[] tenedores = new Tenedores[5];
         Filosofos[] filosofos = new Filosofos[5];
@@ -16,9 +22,8 @@ public class Main {
         filosofos[3] = new Filosofos(3, tenedores[3], tenedores[4], sillas);
         filosofos[4] = new Filosofos(4, tenedores[4], tenedores[0], sillas);
 
-        for (Filosofos filosofo : filosofos) {
-            filosofo.start();
+        for(Filosofos f: filosofos){
+            f.start();
         }
-
     }
 }

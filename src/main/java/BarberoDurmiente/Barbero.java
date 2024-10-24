@@ -59,8 +59,8 @@ public class Barbero extends Thread {
         }
     }
     public boolean llegaCliente(){
-        int n = (int) Math.round(Math.random());
-        if(n==1){
+        int n = (int) Math.round(Math.random()*4);
+        if(n>=1){
             return true;
         }else{
             return false;
