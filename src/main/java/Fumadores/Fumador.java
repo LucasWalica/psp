@@ -29,20 +29,17 @@ public class Fumador extends Thread{
             }
         }
     }
-
     public synchronized void intentarFumar() throws InterruptedException {
         if(checkMesa()){
             System.out.println("\n El fumador "+ this.getId()+ " se ha liado un cigarrillo y esta fumando \n");
-            sleep(1000);
+            sleep(500);
         }
     }
-
     public synchronized boolean checkMesa(){
-        String ing = this.ingrediente;
         ArrayList<String> ingsMesa = new ArrayList<>(Arrays.asList(m.ing2, m.ing1));
         int count=0;
         for(String ingMesa : ingsMesa){
-            if(ingsMesa.contains(ing)){
+            if(ingsMesa.contains(this.ingrediente)){
                 return false;
             }
         }

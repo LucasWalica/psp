@@ -28,7 +28,7 @@ public class Agente extends Thread{
                 throw new RuntimeException(e);
             }
             try {
-                sleep(2000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
