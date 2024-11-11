@@ -13,7 +13,6 @@ public class Barbero extends Thread {
         this.clientes = clientes;
         this.sillas = sillas;
     }
-
     @Override
     public void run() {
         try{
@@ -24,42 +23,38 @@ public class Barbero extends Thread {
             e.printStackTrace();
         }
     }
-
-
     public void trabajoBarbero() throws InterruptedException{
         int counter = 0;
-        while(true){
-            if(llegaCliente()){
-                this.clientes.add(new Clientes(counter));
-                counter++;
-                for(Clientes c: clientes){
-                    if(this.sillas.ocupar()){
-                        System.out.println("El cliente " + c.getId() + " se ha sentado");
-                    }else{
-                        clientes.remove(c);
-                        System.out.println("El cliente "+ c.getId() + " se ha ido");
-                    }
-                }
-                if(!this.ocupado && !this.durmiendo){
-                    Clientes c = this.clientes.get(0);
-                    System.out.println("El cliente "+ c.getId() + " esta siendo atendido por el barero");
-                    this.clientes.remove(0);
-                    this.ocupado=true;
-                    this.sillas.liberarsilla();
-                    sleep((int) Math.random()*3000);
-                    this.ocupado=false;
+        if(llegaCliente()){
+            this.clientes.add(new Clientes(counter));
+            counter++;
+            for(Clientes c: clientes){
+                if(this.sillas.ocupar()){
+                    System.out.println("El cliente " + c.getId() + " se ha sentado");
+                }else{
+                    clientes.remove(c);
+                    System.out.println("El cliente "+ c.getId() + " se ha ido");
                 }
             }
-            if(!this.ocupado && sillas.estanVacias()){
-                this.durmiendo=true;
-                System.out.println("El Barbero esta durmiendo");
-                sleep((int) Math.random() * 3000);
-                this.durmiendo=false;
+            if(!this.ocupado && !this.durmiendo){
+                Clientes c = this.clientes.get(0);
+                System.out.println("El cliente "+ c.getId() + " esta siendo atendido por el barero");
+                this.clientes.remove(0);
+                this.ocupado=true;
+                this.sillas.liberarsilla();
+                sleep((int) Math.random()*3000);
+                this.ocupado=false;
             }
+        }
+        if(!this.ocupado && sillas.estanVacias()) {
+            this.durmiendo = true;
+            System.out.println("El Barbero esta durmiendo");
+            sleep((int) Math.random() * 3000);
+            this.durmiendo = false;
         }
     }
     public boolean llegaCliente(){
-        int n = (int) Math.round(Math.random()*4);
+        int n = (int) Math.round(Math.random()*6);
         if(n>=1){
             return true;
         }else{

@@ -12,6 +12,5 @@ public class Main {
         e1.start();
         e2.start();
         e3.start();
-
     }
 }

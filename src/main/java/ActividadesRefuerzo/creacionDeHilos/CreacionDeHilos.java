@@ -26,10 +26,8 @@ public class CreacionDeHilos {
                 }
             });
         }
-
         executorService.shutdown();
     }
-
 
     static class MiTareaCallable implements Callable<String> {
         private final int taskId;
@@ -41,7 +39,7 @@ public class CreacionDeHilos {
         }
 
         @Override
-        public String call() throws Exception {
+        public synchronized String call() throws Exception {
             System.out.println("El hilo "+this.taskId+" ha sido inicializado y dormira "+this.timeSleep+" milisegundos");
             Thread.sleep(this.timeSleep);
             return "El hilo " + this.taskId + " ha completado su tarea";
