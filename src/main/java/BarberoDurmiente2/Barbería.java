@@ -4,25 +4,33 @@ import java.util.concurrent.Semaphore;
 public class Barbería {
 
     Semaphore salaEspera;
-    Cliente sillon;
+    Semaphore sillon;
+    Semaphore barbero;
 
     Barbería(int n){
+
         salaEspera = new Semaphore(n);
+        sillon = new Semaphore(1);
+        barbero = new Semaphore(0);
     }
 
     public synchronized boolean entrarEnSalaDeEspera(){
-        if(this.salaEspera.availablePermits() == 0){
-            return  false;
-        }else{
-            if(salaEspera.tryAcquire()){
-                return false;
-            }else{
-                return true;
-            }
-        }
+        return salaEspera.tryAcquire();
+    }
+    public void salirDeLaSalaDeEspera(){
+        salaEspera.release();
+    }
+    public void ocuparSillon() throws InterruptedException{
+        sillon.acquire();
+    }
+    public void liberarSillon(){
+        sillon.release();
     }
 
-    public void solicitarCorteDePelo(){
-
+    public void despertarBarbero(){
+        barbero.release();
+    }
+    public void esperarCliente() throws  InterruptedException{
+        barbero.acquire();
     }
 }
