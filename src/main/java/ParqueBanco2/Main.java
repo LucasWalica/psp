@@ -23,7 +23,6 @@ public class Main {
         }
     }
 
-
     public static class Biandante extends Thread{
         int id;
         Semaphore banco;
@@ -48,5 +47,4 @@ public class Main {
             }
         }
     }
-
 }
