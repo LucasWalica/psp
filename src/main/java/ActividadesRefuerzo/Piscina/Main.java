@@ -18,22 +18,63 @@ public class Main {
                 genero.mujer,
                 genero.hombre
         ));
-
+        ArrayList<Nadador> personas = new ArrayList<>();
         System.out.println("Ingrese el numero de buzos: ");
         int nBuzos = in.nextInt();
         System.out.println("Ingrese el numero de nadadores: ");
         int nNadadores = in.nextInt();
 
+
         ExecutorService buzos = Executors.newFixedThreadPool(nBuzos);
         for(int i=0; i<nBuzos; i++){
-            buzos.submit(new Nadador(i, 2, tipo.submarinista, generos.get((int)(Math.random()*generos.size())), piscina));
+            Nadador nad = new Nadador(i, 2, tipo.submarinista, generos.get((int)(Math.random()*generos.size())), piscina);
+            personas.add(nad);
+            buzos.submit(nad);
         }
         ExecutorService nadadores = Executors.newFixedThreadPool(nNadadores);
         for(int i=0; i<nNadadores; i++){
-            nadadores.submit(new Nadador(i, 1, tipo.nadador, generos.get((int)(Math.random()*generos.size())), piscina));
+            Nadador nad = new Nadador(i, 1, tipo.nadador, generos.get((int)(Math.random()*generos.size())), piscina);
+            personas.add(nad);
+            nadadores.submit(nad);
         }
+
+        Checker checker = new Checker(personas);
+        checker.run();
     }
 
+
+    public static class Checker extends Thread{
+        ArrayList<Nadador> nads;
+        Checker(ArrayList<Nadador> nads){
+            this.nads = nads;
+        }
+
+        @Override
+        public void run() {
+            while(true){
+                try {
+                    checkSwimmers();
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        public void checkSwimmers(){
+            ArrayList<Nadador> nadsBor = new ArrayList<>();
+            for(int i=0; i<this.nads.size(); i++){
+                if(this.nads.get(i).nadando){
+                    nadsBor.add(this.nads.get(i));
+                }
+            }
+            System.out.println("\n Swimmers in the swimming pool: \n");
+            for(Nadador n : nadsBor){
+                System.out.println(n);
+            }
+            System.out.println("\n \n");
+        }
+    }
     public static class Nadador extends Thread{
 
         int id;
@@ -58,6 +99,7 @@ public class Main {
                 try {
                     this.piscina.acquire(lineasOcupadas);
                     this.nadando = true;
+                    Thread.sleep(1000);
                     System.out.println("El "+ this.tipo + " está en el agua.");
                     this.largosNadados++;
                     this.piscina.release(lineasOcupadas);
@@ -68,6 +110,11 @@ public class Main {
                     throw new RuntimeException(e);
                 }
             }
+        }
+
+        @Override
+        public String toString() {
+            return this.tipo + " , es "+ this.gender+ " y ha nadado " + this.largosNadados;
         }
     }
 
